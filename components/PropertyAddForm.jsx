@@ -34,9 +34,66 @@ const PropertyAddForm = () => {
     setMounted(true);
   }, []);
 
-  const handleChange = () => {};
-  const handleAmenitiesChange = () => {};
-  const handleImageChange = () => {};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name.includes(".")) {
+      const [outerKey, innerKey] = name.split(".");
+
+      setFields((prev) => ({
+        ...prev,
+        [outerKey]: {
+          ...prev[outerKey],
+          [innerKey]: value,
+        },
+      }));
+    } else {
+      setFields((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+  const handleAmenitiesChange = (e) => {
+    const { value, checked } = e.target;
+
+    // clone the current array
+    const updatedAmenities = [...fields.amenities];
+
+    if (checked) {
+      // add value to array
+      updatedAmenities.push(value);
+    } else {
+      // remove value from array
+      const index = updatedAmenities.indexOf(value);
+
+      if (index !== -1) {
+        updatedAmenities.splice(index, 1);
+      }
+    }
+
+    // update state with updated array
+    setFields((prev) => ({
+      ...prev,
+      amenities: updatedAmenities,
+    }));
+  };
+  const handleImageChange = (e) => {
+    const { files } = e.target;
+
+    // clone images array
+    const updatedImages = [...fields.images];
+
+    for (const file of files) {
+      updatedImages.push(file);
+    }
+
+    // update state with arr of images
+    setFields((prev) => ({
+      ...prev,
+      images: updatedImages,
+    }));
+  };
 
   return (
     mounted && (
