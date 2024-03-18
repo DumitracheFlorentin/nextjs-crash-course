@@ -1,6 +1,6 @@
 import connectDB from "@/config/database";
 import Property from "@/models/Property";
-import { getSesssionUser } from "@/utils/getSessionUser";
+import { getSessionUser } from "@/utils/getSessionUser";
 
 // GET /api/properties/:id
 export const GET = async (request, { params }) => {
@@ -27,7 +27,7 @@ export const DELETE = async (request, { params }) => {
   try {
     const propertyId = params.id;
 
-    const sessionUser = await getSesssionUser();
+    const sessionUser = await getSessionUser();
 
     if (!sessionUser || !sessionUser.userId) {
       return new Response("UserId is required", { status: 401 });
@@ -63,7 +63,7 @@ export const PUT = async (request, { params }) => {
   try {
     await connectDB();
 
-    const sessionUser = await getSesssionUser();
+    const sessionUser = await getSessionUser();
 
     if (!sessionUser || !sessionUser.userId) {
       return new Response("UserId is required", {

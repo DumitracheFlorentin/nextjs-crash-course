@@ -1,6 +1,6 @@
 import connectDB from "@/config/database";
 import Property from "@/models/Property";
-import { getSesssionUser } from "@/utils/getSessionUser";
+import { getSessionUser } from "@/utils/getSessionUser";
 import cloudinary from "@/config/cloudinary";
 
 // GET /api/properties
@@ -23,7 +23,7 @@ export const POST = async (request) => {
   try {
     await connectDB();
 
-    const sessionUser = await getSesssionUser();
+    const sessionUser = await getSessionUser();
 
     if (!sessionUser || !sessionUser.userId) {
       return new Response("UserId is required", {
